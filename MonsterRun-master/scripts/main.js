@@ -4,21 +4,29 @@
 
 require.config({
 	paths : {
-		'IIG' : '../lib/IIG'
+		'IIG' : '../lib/IIG',
+		'buzz' : '../lib/buzz'
 	},
 	shim : {
 		'IIG' : {
 			'exports' : 'IIG',
 			'deps' : []
 		}
+	},
+	'buzz' : {
+			'exports' : 'buzz',
+			'deps' : []
 	}
 });
 
 require(['game', 'IM', 'IIG', 'config'], function(game, ImagesManager, IIG, config) {
 
 	ImagesManager.add('assets/img/bkg2.jpg');
-	ImagesManager.add('assets/img/player.png');
-	ImagesManager.add('assets/img/bonus.png');
+	ImagesManager.add('assets/img/chatonSprite.png');
+	ImagesManager.add('assets/img/playerSprite.png');
+	ImagesManager.add('assets/img/oeufs.png');
+	ImagesManager.add('assets/img/bulle.png');
+	ImagesManager.add('assets/img/player_bulle.png');
 
 	ImagesManager.loadAll(function() {
 		// Initialisation du jeu
@@ -34,6 +42,8 @@ require(['game', 'IM', 'IIG', 'config'], function(game, ImagesManager, IIG, conf
 
 		game.update();
 		game.render();
+
+		ImagesManager.update()
 
 		requestAnimFrame(GameLoop);
 	}
@@ -61,10 +71,12 @@ function checkCollision(shapeA,shapeB){
     b_right = shapeB.x + shapeB.width;
 
   	if (a_bottom > b_top && a_bottom < b_bottom && a_left < b_right && a_right > b_left){
+   		console.log('collision top');
    		return 'top';
     }
 
     if (a_top < b_bottom && a_bottom > b_bottom && a_left < b_right && a_right > b_left){
+   		console.log('collision bottom');
    		return 'bottom';
     }
 
